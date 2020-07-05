@@ -5,6 +5,7 @@ import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
 import PostList from "./components/PostList";
 import Pagination from "./components/Pagination";
+import SearchFrom from "./components/SearchForm";
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -42,7 +43,9 @@ function App() {
   function hanldePageChange(newPage) {
     setFilters({ ...filters, _limit: 10, _page: newPage });
   }
-
+  function handleFiltersChange(newFilters) {
+    setFilters({ ...filters, _page: 1, title_like: newFilters.searchForm });
+  }
   const handleTodoClick = (todo) => {
     const index = todoList.findIndex((x) => x.id === todo.id);
     if (index < 0) return;
@@ -61,6 +64,7 @@ function App() {
   return (
     <div className="App">
       <h1>Post List</h1>
+      <SearchFrom onSubmit={handleFiltersChange} />
       <PostList posts={postList} />
       <Pagination pagination={pagination} onPageChange={hanldePageChange} />
     </div>
